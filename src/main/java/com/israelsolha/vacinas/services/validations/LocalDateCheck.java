@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LocalDateCheck {
 
-    String message() default "Datas devem ser no passado e no formato aaaa-mm-dd";
+    String message() default "Datas devem ser no passado e no formato dd/mm/aaaa";
 
     Class<?>[] groups() default {};
 
