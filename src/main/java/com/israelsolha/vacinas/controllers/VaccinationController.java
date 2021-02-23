@@ -19,33 +19,35 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.text.Normalizer;
 
-@RestController
-@RequestMapping(value = "/vaccinations")
+@RestController @RequestMapping(value = "/vaccinations")
 public class VaccinationController {
 
-    @Autowired
-    private VaccinationService vaccinationService;
+    @Autowired private VaccinationService vaccinationService;
 
-    @Autowired
-    private VaccineRepository vaccineRepository;
+    @Autowired private VaccineRepository vaccineRepository;
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     @PostMapping(value = "/create")
-    public ResponseEntity<VaccinationResponse> insert(@Valid @RequestBody VaccinationRequest vaccinationRequest) {
-        String vaccineName = Normalizer.normalize(vaccinationRequest.getVaccineName(), Normalizer.Form.NFD).replaceAll("\\p{Punct}", "").toUpperCase();
+    public ResponseEntity<VaccinationResponse> insert(
+            @Valid @RequestBody VaccinationRequest vaccinationRequest) {
+        String vaccineName = Normalizer
+                .normalize(vaccinationRequest.getVaccineName(),
+                        Normalizer.Form.NFD).replaceAll("\\p{Punct}", "")
+                .toUpperCase();
         Vaccine vaccine = vaccineRepository.findByName(vaccineName);
         if (vaccine == null) {
             vaccine = new Vaccine(null, vaccineName);
             vaccine = vaccineRepository.save(vaccine);
         }
-        User user = userService.find(vaccinationRequest.getEmail().toLowerCase());
-        Vaccination vaccination = vaccinationRequest.toModel(vaccine,user);
+        User user =
+                userService.find(vaccinationRequest.getEmail().toLowerCase());
+        Vaccination vaccination = vaccinationRequest.toModel(vaccine, user);
         System.out.println(vaccination.getUser().getName());
         vaccination = vaccinationService.insert(vaccination);
         VaccinationResponse vaccinationResponse = vaccination.toResponse();
-        return ResponseEntity.status(HttpStatus.CREATED).body(vaccinationResponse);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vaccinationResponse);
     }
 
 }

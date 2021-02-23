@@ -8,8 +8,7 @@ public class UserResponse {
     private String name;
     private String email;
 
-    @Deprecated
-    public UserResponse() {
+    @Deprecated public UserResponse() {
     }
 
     public UserResponse(UUID uuid, String name, String email) {

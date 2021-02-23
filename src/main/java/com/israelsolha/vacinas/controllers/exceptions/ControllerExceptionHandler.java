@@ -19,21 +19,27 @@ public class ControllerExceptionHandler {
 
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<StandardError> preValidation(HttpMessageNotReadableException e, HttpServletRequest request) {
-        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Corpo da " +
-                "requisição vazio ou mal formatado", request.getRequestURI().toString());
+    public ResponseEntity<StandardError> preValidation(
+            HttpMessageNotReadableException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Corpo da requisição vazio ou mal formatado",
+                request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
-        ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro " +
-                "de validação", request.getRequestURI().toString());
+    public ResponseEntity<StandardError> validation(
+            MethodArgumentNotValidException e, HttpServletRequest request) {
+        ValidationError err = new ValidationError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Erro " + "de validação",
+                request.getRequestURI());
         List<FieldMessage> uniqueErrors = new ArrayList<>();
         String errorMessage;
         for (FieldError x : e.getBindingResult().getFieldErrors()) {
             if (x.getCode().equals("UniqueField")) {
-                uniqueErrors.add(new FieldMessage(x.getField(), x.getField() + " já existente"));
+                uniqueErrors.add(new FieldMessage(x.getField(),
+                        x.getField() + " já existente"));
             } else {
                 err.addError(x.getField(), x.getDefaultMessage());
             }
@@ -50,18 +56,21 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> redundantUniqueValidation(DataIntegrityViolationException e,
-                                                                   HttpServletRequest request) {
-        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.CONFLICT.value(), "Erro de " +
-                "integridade, campo duplicado", request.getRequestURI().toString());
+    public ResponseEntity<StandardError> redundantUniqueValidation(
+            DataIntegrityViolationException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.CONFLICT.value(),
+                "Erro de " + "integridade, campo duplicado",
+                request.getRequestURI());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError> objectNotFoundValidation(ObjectNotFoundException e,
-                                                                  HttpServletRequest request) {
-        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.PRECONDITION_FAILED.value(),
-                e.getMessage(), request.getRequestURI());
+    public ResponseEntity<StandardError> objectNotFoundValidation(
+            ObjectNotFoundException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.PRECONDITION_FAILED.value(), e.getMessage(),
+                request.getRequestURI());
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(err);
     }
 

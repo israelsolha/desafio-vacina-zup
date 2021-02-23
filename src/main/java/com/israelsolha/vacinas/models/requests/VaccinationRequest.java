@@ -12,24 +12,23 @@ import java.time.format.DateTimeFormatter;
 
 public class VaccinationRequest {
 
-    @NotBlank(message = "Preenchimento obrigatório")
-    private String vaccineName;
+    @NotBlank(message = "Preenchimento obrigatório") private String vaccineName;
     @Email(message = "Email inválido")
-    @NotBlank(message = "Preenchimento obrigatório")
-    private String email;
-    @LocalDateCheck
-    private String vaccinationDate;
+    @NotBlank(message = "Preenchimento obrigatório") private String email;
+    @LocalDateCheck private String vaccinationDate;
 
     private LocalDate vaccinationLocalDate;
 
     public VaccinationRequest() {
     }
 
-    public VaccinationRequest(String vaccineName, String email, String vaccinationDate) {
+    public VaccinationRequest(String vaccineName, String email,
+                              String vaccinationDate) {
         this.vaccineName = vaccineName;
         this.email = email;
         this.vaccinationDate = vaccinationDate;
-        this.vaccinationLocalDate = LocalDate.parse(vaccinationDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.vaccinationLocalDate = LocalDate.parse(vaccinationDate,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getVaccineName() {
@@ -65,7 +64,8 @@ public class VaccinationRequest {
     }
 
     public Vaccination toModel(Vaccine vaccine, User user) {
-        vaccinationLocalDate = LocalDate.parse(vaccinationDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return new Vaccination(null,user,vaccine,vaccinationLocalDate);
+        vaccinationLocalDate = LocalDate.parse(vaccinationDate,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return new Vaccination(null, user, vaccine, vaccinationLocalDate);
     }
 }

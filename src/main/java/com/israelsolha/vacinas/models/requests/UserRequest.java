@@ -4,13 +4,9 @@ import com.israelsolha.vacinas.models.User;
 import com.israelsolha.vacinas.services.validations.LocalDateCheck;
 import com.israelsolha.vacinas.services.validations.UniqueField;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

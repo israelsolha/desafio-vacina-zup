@@ -14,17 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class VaccineServiceTest {
+@ExtendWith(MockitoExtension.class) public class VaccineServiceTest {
 
-    @Mock
-    private VaccineRepository vaccineRepository;
+    @Mock private VaccineRepository vaccineRepository;
 
-    @InjectMocks
-    private VaccineService vaccineService;
+    @InjectMocks private VaccineService vaccineService;
 
-    @Test
-    public void insert() {
+    @Test public void insert() {
         Vaccine vaccine = aVaccine();
         when(vaccineRepository.save(any())).thenReturn(vaccine);
         Vaccine insertedVaccine = vaccineService.insert(vaccine);

@@ -9,19 +9,22 @@ public class UserRequestPrototype {
     private String cpf;
     private String birthDate;
 
-    public UserRequestPrototype(String name, String email, String cpf, String birthDate) {
+    public UserRequestPrototype(String name, String email, String cpf,
+                                String birthDate) {
         this.name = name;
         this.email = email;
         this.cpf = cpf;
         this.birthDate = birthDate;
     }
 
-    public static UserRequestPrototype aUserRequestJson(){
-        return new UserRequestPrototype("Israel","israel-solha@hotmail.com","89450209006", "10/10/1996");
+    public static UserRequestPrototype aUserRequestJson() {
+        return new UserRequestPrototype("Israel", "israel-solha@hotmail.com",
+                "89450209006", "10/10/1996");
     }
 
-    public static UserRequest aUserRequest(){
-        return new UserRequest("Israel","israel-solha@hotmail.com","89450209006", "10/10/1996");
+    public static UserRequest aUserRequest() {
+        return new UserRequest("Israel", "israel-solha@hotmail.com",
+                "89450209006", "10/10/1996");
     }
 
     public String getName() {

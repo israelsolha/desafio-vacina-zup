@@ -8,18 +8,21 @@ public class VaccinationRequestPrototype {
     private String email;
     private String vaccinationDate;
 
-    public VaccinationRequestPrototype(String vaccineName, String email, String vaccinationDate) {
+    public VaccinationRequestPrototype(String vaccineName, String email,
+                                       String vaccinationDate) {
         this.vaccineName = vaccineName;
         this.email = email;
         this.vaccinationDate = vaccinationDate;
     }
 
-    public static VaccinationRequestPrototype aVaccinationRequestJson(){
-        return new VaccinationRequestPrototype("coronavac", "israel-solha@hotmail.com", "25/01/2021");
+    public static VaccinationRequestPrototype aVaccinationRequestJson() {
+        return new VaccinationRequestPrototype("coronavac",
+                "israel-solha@hotmail.com", "25/01/2021");
     }
 
     public static VaccinationRequest aVaccinationRequest() {
-        return new VaccinationRequest("coronavac", "israel-solha@hotmail.com", "25/01/2021");
+        return new VaccinationRequest("coronavac", "israel-solha@hotmail.com",
+                "25/01/2021");
     }
 
     public String getVaccineName() {

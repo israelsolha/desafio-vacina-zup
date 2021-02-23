@@ -10,24 +10,21 @@ import javax.validation.ValidationException;
 import static com.israelsolha.vacinas.prototypes.VaccinePrototype.aVaccine;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-public class VaccineRepositoryTest {
+@DataJpaTest public class VaccineRepositoryTest {
 
-    @Autowired
-    private VaccineRepository vaccineRepository;
+    @Autowired private VaccineRepository vaccineRepository;
 
-    @Test
-    public void testIfVaccineIsSaved() {
+    @Test public void testIfVaccineIsSaved() {
         Vaccine vaccine = vaccineRepository.save(aVaccine());
         assertNotNull(vaccine);
         assertEquals(aVaccine().getName(), vaccine.getName());
         assertNotNull(vaccine.getId());
     }
 
-    @Test
-    public void testIfValidationsAreWorking() {
+    @Test public void testIfValidationsAreWorking() {
         Vaccine vaccine = vaccineRepository.save(aVaccine());
         vaccine.setName("");
-        assertThrows(ValidationException.class, () -> vaccineRepository.saveAndFlush(vaccine));
+        assertThrows(ValidationException.class,
+                () -> vaccineRepository.saveAndFlush(vaccine));
     }
 }

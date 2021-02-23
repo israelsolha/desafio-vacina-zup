@@ -14,35 +14,40 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static com.israelsolha.vacinas.prototypes.UserRequestPrototype.aUserRequestJson;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     JsonMapper jsonMapper = new JsonMapper();
+    @Autowired private MockMvc mockMvc;
 
-    @Test
-    public void testCreateUser() throws Exception {
+    @Test public void testCreateUser() throws Exception {
         UserRequestPrototype userRequest = aUserRequestJson();
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/create").contentType("application/json").content(jsonMapper.writeValueAsString(userRequest))).andExpect(status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(userRequest)))
+                .andExpect(status().isCreated());
     }
 
-    @Test
-    public void testWrongDataGives400() throws Exception {
+    @Test public void testWrongDataGives400() throws Exception {
         UserRequestPrototype userRequest = aUserRequestJson();
         userRequest.setCpf("22222222222");
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/create").contentType("application/json").content(jsonMapper.writeValueAsString(userRequest))).andExpect(status().isBadRequest());
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(userRequest)))
+                .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void testDuplicateDataGives409() throws Exception {
+    @Test public void testDuplicateDataGives409() throws Exception {
         UserRequestPrototype userRequest = aUserRequestJson();
         UserRequestPrototype userRequest2 = aUserRequestJson();
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/create").contentType("application/json").content(jsonMapper.writeValueAsString(userRequest)));
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/create").contentType("application/json").content(jsonMapper.writeValueAsString(userRequest2))).andExpect(status().isConflict());
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(userRequest)));
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(userRequest2)))
+                .andExpect(status().isConflict());
     }
 
 }

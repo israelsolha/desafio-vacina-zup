@@ -1,13 +1,7 @@
 package com.israelsolha.vacinas.models.response;
 
-import com.israelsolha.vacinas.models.User;
 import com.israelsolha.vacinas.models.Vaccine;
 
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -21,7 +15,8 @@ public class VaccinationResponse {
     public VaccinationResponse() {
     }
 
-    public VaccinationResponse(UUID uuid, UserResponse user, Vaccine vaccine, LocalDate vaccinationDate) {
+    public VaccinationResponse(UUID uuid, UserResponse user, Vaccine vaccine,
+                               LocalDate vaccinationDate) {
         this.uuid = uuid;
         this.user = user;
         this.vaccine = vaccine;

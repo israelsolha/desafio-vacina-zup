@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface VaccineRepository extends JpaRepository<Vaccine, UUID> {
 
-    public Vaccine findByName(final String name);
+    Vaccine findByName(final String name);
 }

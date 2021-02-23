@@ -15,37 +15,33 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class VaccinationServiceTest {
+@ExtendWith(MockitoExtension.class) public class VaccinationServiceTest {
 
-    @Mock
-    private VaccinationRepository vaccinationRepository;
+    @Mock private VaccinationRepository vaccinationRepository;
 
-    @Mock
-    private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @InjectMocks
-    private VaccinationService vaccinationService;
+    @InjectMocks private VaccinationService vaccinationService;
 
-    @Mock
-    private UserService userService;
+    @Mock private UserService userService;
 
-    @Test
-    public void insert() {
+    @Test public void insert() {
         Vaccination vaccination = aVaccination();
         when(vaccinationRepository.save(any())).thenReturn(vaccination);
         when(userService.find(any())).thenReturn(vaccination.getUser());
-        Vaccination insertedVaccination = vaccinationService.insert(vaccination);
+        Vaccination insertedVaccination =
+                vaccinationService.insert(vaccination);
         assertNotNull(insertedVaccination);
-        assertEquals(insertedVaccination.getVaccinationDate(), vaccination.getVaccinationDate());
+        assertEquals(insertedVaccination.getVaccinationDate(),
+                vaccination.getVaccinationDate());
     }
 
-    @Test
-    public void checkEmailsNotRelatedToUserAreNotAllowed() {
+    @Test public void checkEmailsNotRelatedToUserAreNotAllowed() {
         Vaccination vaccination = aVaccination();
         vaccination.getUser().setEmail("emaildoesnotexist@gmail.com");
         when(userService.find(any())).thenThrow(UserNotFoundError.class);
-        assertThrows(UserNotFoundError.class, () -> vaccinationService.insert(vaccination));
+        assertThrows(UserNotFoundError.class,
+                () -> vaccinationService.insert(vaccination));
     }
 
 }

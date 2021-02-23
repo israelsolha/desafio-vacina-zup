@@ -15,35 +15,43 @@ import static com.israelsolha.vacinas.prototypes.UserRequestPrototype.aUserReque
 import static com.israelsolha.vacinas.prototypes.VaccinationRequestPrototype.aVaccinationRequestJson;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class VaccinationControllerTest {
+@SpringBootTest @AutoConfigureMockMvc public class VaccinationControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
     JsonMapper jsonMapper = new JsonMapper();
 
-    @Test
-    public void testCreateVaccination() throws Exception {
+    @Test public void testCreateVaccination() throws Exception {
         UserRequestPrototype userRequest = aUserRequestJson();
-        VaccinationRequestPrototype vaccinationRequest = aVaccinationRequestJson();
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/create").contentType("application/json").content(jsonMapper.writeValueAsString(userRequest)));
-        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create").contentType("application/json").content(jsonMapper.writeValueAsString(vaccinationRequest))).andExpect(status().isCreated());
+        VaccinationRequestPrototype vaccinationRequest =
+                aVaccinationRequestJson();
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(userRequest)));
+        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(vaccinationRequest)))
+                .andExpect(status().isCreated());
     }
 
-    @Test
-    public void testWrongDataGives400() throws Exception {
-        VaccinationRequestPrototype vaccinationRequest = aVaccinationRequestJson();
+    @Test public void testWrongDataGives400() throws Exception {
+        VaccinationRequestPrototype vaccinationRequest =
+                aVaccinationRequestJson();
         vaccinationRequest.setVaccineName(null);
-        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create").contentType("application/json").content(jsonMapper.writeValueAsString(vaccinationRequest))).andExpect(status().isBadRequest());
+        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(vaccinationRequest)))
+                .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void testUnusedEmailGives412() throws Exception {
-        VaccinationRequestPrototype vaccinationRequest = aVaccinationRequestJson();
+    @Test public void testUnusedEmailGives412() throws Exception {
+        VaccinationRequestPrototype vaccinationRequest =
+                aVaccinationRequestJson();
         vaccinationRequest.setEmail("emailnaousado@gmail.com");
-        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create").contentType("application/json").content(jsonMapper.writeValueAsString(vaccinationRequest))).andExpect(status().isPreconditionFailed());
+        mockMvc.perform(MockMvcRequestBuilders.post("/vaccinations/create")
+                .contentType("application/json")
+                .content(jsonMapper.writeValueAsString(vaccinationRequest)))
+                .andExpect(status().isPreconditionFailed());
     }
 
 }

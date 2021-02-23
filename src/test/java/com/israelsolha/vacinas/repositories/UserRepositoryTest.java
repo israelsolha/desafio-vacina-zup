@@ -11,33 +11,31 @@ import javax.validation.ValidationException;
 import static com.israelsolha.vacinas.prototypes.UserPrototype.aUser;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-public class UserRepositoryTest {
+@DataJpaTest public class UserRepositoryTest {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
-    @Test
-    public void testIfUserIsSaved() {
-        User user = userRepository.save(aUser());
+    @Test public void testIfUserIsSaved() {
+        User userPrototype = aUser();
+        User user = userRepository.save(userPrototype);
         assertNotNull(user);
-        assertEquals(aUser().getName(), user.getName());
+        assertEquals(userPrototype.getName(), user.getName());
         assertNotNull(user.getUuid());
     }
 
-    @Test
-    public void testIfValidationsAreWorking() {
+    @Test public void testIfValidationsAreWorking() {
         User userPrototype = aUser();
         userPrototype.setCpf("123827");
-        assertThrows(ValidationException.class, () -> userRepository.saveAndFlush(userPrototype));
+        assertThrows(ValidationException.class,
+                () -> userRepository.saveAndFlush(userPrototype));
     }
 
-    @Test
-    public void testUniqueEmailIsWorking() {
+    @Test public void testUniqueEmailIsWorking() {
         User userPrototype = aUser();
         User userPrototype2 = aUser();
         userRepository.saveAndFlush(userPrototype);
-        assertThrows(DataIntegrityViolationException.class, () -> userRepository.saveAndFlush(userPrototype2));
+        assertThrows(DataIntegrityViolationException.class,
+                () -> userRepository.saveAndFlush(userPrototype2));
 
     }
 }

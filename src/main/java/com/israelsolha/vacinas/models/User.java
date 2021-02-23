@@ -1,24 +1,22 @@
 package com.israelsolha.vacinas.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.israelsolha.vacinas.models.response.UserResponse;
-import com.israelsolha.vacinas.services.validations.UniqueField;
-import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 public class User {
-
 
     @Id
     @GeneratedValue(generator="UUID")
