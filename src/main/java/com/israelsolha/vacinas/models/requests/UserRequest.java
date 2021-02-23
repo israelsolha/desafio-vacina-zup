@@ -1,6 +1,7 @@
 package com.israelsolha.vacinas.models.requests;
 
 import com.israelsolha.vacinas.models.User;
+import com.israelsolha.vacinas.services.validations.LocalDateCheck;
 import com.israelsolha.vacinas.services.validations.UniqueField;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UserRequest {
 
@@ -24,18 +26,20 @@ public class UserRequest {
     @CPF(message="CPF inválido")
     @NotBlank(message = "Preenchimento obrigatório")
     private String cpf;
-    @NotNull(message = "Preenchimento obrigatório")
-    @Past(message="Data de nascimento deve ser no passado")
-    private LocalDate birthDate;
+    @LocalDateCheck
+    private String birthDate;
+
+    private LocalDate birthLocalDate;
 
     public UserRequest() {
     }
 
-    public UserRequest(String name, String email, String cpf, LocalDate birthDate) {
+    public UserRequest(String name, String email, String cpf, String birthDate) {
         this.name = name;
         this.email = email.toLowerCase();
         this.cpf = cpf;
         this.birthDate = birthDate;
+        this.birthLocalDate = LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getName() {
@@ -51,7 +55,7 @@ public class UserRequest {
     }
 
     public void setEmail(String email) {
-        this.email = email.toLowerCase();
+        this.email = email;
     }
 
     public String getCpf() {
@@ -62,15 +66,24 @@ public class UserRequest {
         this.cpf = cpf;
     }
 
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
+    public LocalDate getBirthLocalDate() {
+        return birthLocalDate;
+    }
+
+    public void setBirthLocalDate(LocalDate birthLocalDate) {
+        this.birthLocalDate = birthLocalDate;
+    }
+
     public User toModel() {
-        return new User(null,name,email,cpf, birthDate);
+        birthLocalDate = LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return new User(null,name,email,cpf, birthLocalDate);
     }
 }

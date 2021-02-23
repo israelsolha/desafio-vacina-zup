@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/create")
-    public ResponseEntity<UserResponse> insert(@Valid @RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> insert(@Valid @RequestBody UserRequest userRequest){
         User user = userRequest.toModel();
         user = userService.insert(user);
         UserResponse userResponse = user.toResponse();

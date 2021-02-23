@@ -2,16 +2,11 @@ package com.israelsolha.vacinas.prototypes;
 
 import com.israelsolha.vacinas.models.requests.VaccinationRequest;
 
-import java.time.LocalDate;
-
 public class VaccinationRequestPrototype {
 
     private String vaccineName;
     private String email;
     private String vaccinationDate;
-
-    public VaccinationRequestPrototype() {
-    }
 
     public VaccinationRequestPrototype(String vaccineName, String email, String vaccinationDate) {
         this.vaccineName = vaccineName;
@@ -19,12 +14,12 @@ public class VaccinationRequestPrototype {
         this.vaccinationDate = vaccinationDate;
     }
 
-    public static VaccinationRequestPrototype aVaccinationRequestJson() {
-        return new VaccinationRequestPrototype("coronavac", "israel-solha@hotmail.com", "2021-01-25");
+    public static VaccinationRequestPrototype aVaccinationRequestJson(){
+        return new VaccinationRequestPrototype("coronavac", "israel-solha@hotmail.com", "25/01/2021");
     }
 
     public static VaccinationRequest aVaccinationRequest() {
-        return new VaccinationRequest("coronavac", "israel-solha@hotmail.com", LocalDate.of(2021, 01, 25));
+        return new VaccinationRequest("coronavac", "israel-solha@hotmail.com", "25/01/2021");
     }
 
     public String getVaccineName() {

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.DateTimeException;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +20,8 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<StandardError> preValidation(HttpMessageNotReadableException e, HttpServletRequest request) {
-        try {
-            if (e.getRootCause().getClass().equals(DateTimeParseException.class) || e.getRootCause().getClass().equals(DateTimeException.class)) {
-                StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-                        "Datas devem ser passadas no formato aaaa-mm-dd", request.getRequestURI().toString());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-            }
-        } catch (Exception exception) {
-        }
-
         StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Corpo da " +
-                "requisição vazio", request.getRequestURI().toString());
+                "requisição vazio ou mal formatado", request.getRequestURI().toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 

@@ -3,40 +3,33 @@ package com.israelsolha.vacinas.models.requests;
 import com.israelsolha.vacinas.models.User;
 import com.israelsolha.vacinas.models.Vaccination;
 import com.israelsolha.vacinas.models.Vaccine;
-import com.israelsolha.vacinas.repositories.VaccineRepository;
-import com.israelsolha.vacinas.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.israelsolha.vacinas.services.validations.LocalDateCheck;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VaccinationRequest {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private VaccineRepository vaccineRepository;
 
     @NotBlank(message = "Preenchimento obrigatório")
     private String vaccineName;
     @Email(message = "Email inválido")
     @NotBlank(message = "Preenchimento obrigatório")
     private String email;
-    @NotNull(message = "Preenchimento obrigatório")
-    @Past(message="Data de nascimento deve ser no passado")
-    private LocalDate vaccinationDate;
+    @LocalDateCheck
+    private String vaccinationDate;
+
+    private LocalDate vaccinationLocalDate;
 
     public VaccinationRequest() {
     }
 
-    public VaccinationRequest(String vaccineName, String email, LocalDate vaccinationDate) {
+    public VaccinationRequest(String vaccineName, String email, String vaccinationDate) {
         this.vaccineName = vaccineName;
         this.email = email;
         this.vaccinationDate = vaccinationDate;
+        this.vaccinationLocalDate = LocalDate.parse(vaccinationDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getVaccineName() {
@@ -55,16 +48,24 @@ public class VaccinationRequest {
         this.email = email;
     }
 
-    public LocalDate getVaccinationDate() {
+    public String getVaccinationDate() {
         return vaccinationDate;
     }
 
-    public void setVaccinationDate(LocalDate vaccinationDate) {
+    public void setVaccinationDate(String vaccinationDate) {
         this.vaccinationDate = vaccinationDate;
     }
 
-    public Vaccination toModel(Vaccine vaccine, User user) {
+    public LocalDate getVaccinationLocalDate() {
+        return vaccinationLocalDate;
+    }
 
-        return new Vaccination(null,user,vaccine,vaccinationDate);
+    public void setVaccinationLocalDate(LocalDate vaccinationLocalDate) {
+        this.vaccinationLocalDate = vaccinationLocalDate;
+    }
+
+    public Vaccination toModel(Vaccine vaccine, User user) {
+        vaccinationLocalDate = LocalDate.parse(vaccinationDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return new Vaccination(null,user,vaccine,vaccinationLocalDate);
     }
 }

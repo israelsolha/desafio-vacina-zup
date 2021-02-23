@@ -12,10 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -38,7 +35,7 @@ public class User {
     @NotBlank(message="Preenchimento obrigatório")
     private String cpf;
     @NotNull(message = "Preenchimento obrigatório")
-    @Past(message="Data de nascimento deve ser no passado")
+    @PastOrPresent(message="Data de nascimento deve ser hoje ou antes")
     private LocalDate birthDate;
     private Long creationTimestamp = System.currentTimeMillis();
 

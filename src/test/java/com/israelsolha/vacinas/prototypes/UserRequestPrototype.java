@@ -2,8 +2,6 @@ package com.israelsolha.vacinas.prototypes;
 
 import com.israelsolha.vacinas.models.requests.UserRequest;
 
-import java.time.LocalDate;
-
 public class UserRequestPrototype {
 
     private String name;
@@ -19,11 +17,11 @@ public class UserRequestPrototype {
     }
 
     public static UserRequestPrototype aUserRequestJson(){
-        return new UserRequestPrototype("Israel","israel-solha@hotmail.com","89450209006", "1996-10-10");
+        return new UserRequestPrototype("Israel","israel-solha@hotmail.com","89450209006", "10/10/1996");
     }
 
     public static UserRequest aUserRequest(){
-        return new UserRequest("Israel","israel-solha@hotmail.com","89450209006", LocalDate.of(1996,10,10));
+        return new UserRequest("Israel","israel-solha@hotmail.com","89450209006", "10/10/1996");
     }
 
     public String getName() {

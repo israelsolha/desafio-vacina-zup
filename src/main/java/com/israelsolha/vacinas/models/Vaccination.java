@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class Vaccination {
     @JoinColumn(name = "vaccine_id")
     private Vaccine vaccine;
     @NotNull(message = "Preenchimento obrigatório")
-    @Past(message="Data de nascimento deve ser no passado")
+    @PastOrPresent(message="Data de vacinação deve ser hoje ou antes")
     private LocalDate vaccinationDate;
 
     public Vaccination() {
