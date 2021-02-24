@@ -14,17 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+@ExtendWith(MockitoExtension.class) public class UserServiceTest {
 
-    @Mock
-    private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @InjectMocks
-    private UserService userService;
+    @InjectMocks private UserService userService;
 
-    @Test
-    public void insert() {
+    @Test public void insert() {
         User aUser = aUser();
         when(userRepository.save(any())).thenReturn(aUser);
         User insertedUser = userService.insert(aUser);

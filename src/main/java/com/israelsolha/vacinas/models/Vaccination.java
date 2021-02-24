@@ -17,7 +17,7 @@ public class Vaccination {
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
     private UUID uuid;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_uuid")
     private User user;
     @ManyToOne
     @JoinColumn(name = "vaccine_id")
@@ -26,6 +26,7 @@ public class Vaccination {
     @PastOrPresent(message="Data de vacinação deve ser hoje ou antes")
     private LocalDate vaccinationDate;
 
+    @Deprecated
     public Vaccination() {
     }
 

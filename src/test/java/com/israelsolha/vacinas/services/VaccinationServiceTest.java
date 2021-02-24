@@ -2,7 +2,6 @@ package com.israelsolha.vacinas.services;
 
 import com.israelsolha.vacinas.controllers.exceptions.UserNotFoundError;
 import com.israelsolha.vacinas.models.Vaccination;
-import com.israelsolha.vacinas.repositories.UserRepository;
 import com.israelsolha.vacinas.repositories.VaccinationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +17,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class) public class VaccinationServiceTest {
 
     @Mock private VaccinationRepository vaccinationRepository;
-
-    @Mock private UserRepository userRepository;
 
     @InjectMocks private VaccinationService vaccinationService;
 

@@ -12,7 +12,7 @@ public class VaccinationResponse {
     private Vaccine vaccine;
     private LocalDate vaccinationDate;
 
-    public VaccinationResponse() {
+    @Deprecated public VaccinationResponse() {
     }
 
     public VaccinationResponse(UUID uuid, UserResponse user, Vaccine vaccine,

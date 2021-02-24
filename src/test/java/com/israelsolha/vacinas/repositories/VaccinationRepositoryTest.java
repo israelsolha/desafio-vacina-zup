@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Vaccination vaccination = aVaccination();
         User user = vaccination.getUser();
         Vaccine vaccine = vaccination.getVaccine();
-        vaccination.setVaccinationDate(LocalDate.of(2022, 10, 10));
+        vaccination.setVaccinationDate(LocalDate.of(2022, 10, 10)); // Futuro
         userRepository.save(user);
         vaccineRepository.save(vaccine);
         assertThrows(ValidationException.class,

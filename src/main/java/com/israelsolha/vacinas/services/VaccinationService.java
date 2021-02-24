@@ -6,14 +6,11 @@ import com.israelsolha.vacinas.repositories.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class VaccinationService {
+@Service public class VaccinationService {
 
-    @Autowired
-    private VaccinationRepository repo;
+    @Autowired private VaccinationRepository repo;
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
     public Vaccination insert(Vaccination obj) {
         User user = userService.find(obj.getUser().getEmail());

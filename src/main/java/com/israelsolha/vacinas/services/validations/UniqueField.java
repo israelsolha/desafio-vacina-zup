@@ -16,6 +16,8 @@ public @interface UniqueField {
 
     Class<?> domainClass();
 
+    int lowerCase() default 1;
+
     String message() default "Atributo já existente";
 
     Class<?>[] groups() default {};

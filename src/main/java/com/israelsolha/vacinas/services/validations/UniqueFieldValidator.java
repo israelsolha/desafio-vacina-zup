@@ -13,12 +13,14 @@ public class UniqueFieldValidator
 
     private String field;
     private Class<?> aClass;
+    private int lowerCase;
 
     @Autowired public EntityManager entityManager;
 
     @Override public void initialize(UniqueField ann) {
         field = ann.fieldName();
         aClass = ann.domainClass();
+        lowerCase = ann.lowerCase();
     }
 
     @Override
@@ -27,6 +29,9 @@ public class UniqueFieldValidator
 
         if (field == null) {
             return true;
+        }
+        if (lowerCase == 1) {
+            value = value.toLowerCase();
         }
         Query customQuery = entityManager.createQuery(
                 "select 1 from " + aClass.getName() + " where " + field +

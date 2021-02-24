@@ -19,6 +19,7 @@ public class VaccinationRequest {
 
     private LocalDate vaccinationLocalDate;
 
+    @Deprecated
     public VaccinationRequest() {
     }
 

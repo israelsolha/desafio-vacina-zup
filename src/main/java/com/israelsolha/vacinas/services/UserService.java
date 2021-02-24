@@ -14,6 +14,7 @@ import java.util.Optional;
 
     public User insert(User obj) {
         obj.setUuid(null);
+        obj.setEmail(obj.getEmail().toLowerCase());
         return repo.save(obj);
     }
 
